@@ -1,5 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <actions/>
   <description>release</description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -36,45 +37,6 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Ant plugin="ant@1.9">
-      <targets>&lt;project name=&quot;Simple&quot; default=&quot;dist&quot; basedir=&quot;.&quot;&gt;
-    &lt;description&gt;
-    simplest example build file
-  &lt;/description&gt;
-    &lt;!-- set global properties for this build --&gt;
-    &lt;property name=&quot;src&quot; location=&quot;src&quot; /&gt;
-    &lt;property name=&quot;build&quot; location=&quot;build&quot; /&gt;
-    &lt;property name=&quot;dist&quot; location=&quot;dist&quot; /&gt;
-    &lt;property name=&quot;version&quot; value=&quot;1.0&quot; /&gt;
- 
-    &lt;target name=&quot;init&quot;&gt;
-        &lt;!-- Create the time stamp --&gt;
-        &lt;tstamp /&gt;
-        &lt;!-- Create the build directory structure used by compile --&gt;
-        &lt;mkdir dir=&quot;${build}&quot; /&gt;
-    &lt;/target&gt;
- 
-    &lt;target name=&quot;compile&quot; depends=&quot;init&quot; description=&quot;compile the source&quot;&gt;
-        &lt;!-- Compile the java code from ${src} into ${build} --&gt;
-        &lt;javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; /&gt;
-    &lt;/target&gt;
- 
-    &lt;target name=&quot;dist&quot; depends=&quot;compile&quot; description=&quot;generate the distribution&quot;&gt;
-        &lt;buildnumber /&gt;
-        &lt;!-- Create the distribution directory --&gt;
-        &lt;mkdir dir=&quot;${dist}/lib&quot; /&gt;
- 
-        &lt;!-- Put everything in ${build} into the MyApplication-${version}.${build.number}.jar --&gt;
-        &lt;jar destfile=&quot;${dist}/lib/MyApplication-${version}.${build.number}.jar&quot; basedir=&quot;${build}&quot; /&gt;
-    &lt;/target&gt;
- 
-    &lt;target name=&quot;clean&quot; description=&quot;clean up&quot;&gt;
-        &lt;!-- Delete the ${build} and ${dist} directory trees --&gt;
-        &lt;delete dir=&quot;${build}&quot; /&gt;
-        &lt;delete dir=&quot;${dist}&quot; /&gt;
-    &lt;/target&gt;
-&lt;/project&gt;</targets>
-    </hudson.tasks.Ant>
     <hudson.tasks.BatchFile>
       <command>ant -f build.xml</command>
     </hudson.tasks.BatchFile>
