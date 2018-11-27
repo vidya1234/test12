@@ -1,15 +1,86 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
+  <description>release</description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>false</canRoam>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>2</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/vidya1234/my-first-blog</url>
+        <credentialsId>1e58b95d-19a0-421d-b171-779aa0e79229</credentialsId>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Ant plugin="ant@1.9">
+      <targets>&lt;project name=&quot;Simple&quot; default=&quot;dist&quot; basedir=&quot;.&quot;&gt;
+    &lt;description&gt;
+    simplest example build file
+  &lt;/description&gt;
+    &lt;!-- set global properties for this build --&gt;
+    &lt;property name=&quot;src&quot; location=&quot;src&quot; /&gt;
+    &lt;property name=&quot;build&quot; location=&quot;build&quot; /&gt;
+    &lt;property name=&quot;dist&quot; location=&quot;dist&quot; /&gt;
+    &lt;property name=&quot;version&quot; value=&quot;1.0&quot; /&gt;
+ 
+    &lt;target name=&quot;init&quot;&gt;
+        &lt;!-- Create the time stamp --&gt;
+        &lt;tstamp /&gt;
+        &lt;!-- Create the build directory structure used by compile --&gt;
+        &lt;mkdir dir=&quot;${build}&quot; /&gt;
+    &lt;/target&gt;
+ 
+    &lt;target name=&quot;compile&quot; depends=&quot;init&quot; description=&quot;compile the source&quot;&gt;
+        &lt;!-- Compile the java code from ${src} into ${build} --&gt;
+        &lt;javac srcdir=&quot;${src}&quot; destdir=&quot;${build}&quot; /&gt;
+    &lt;/target&gt;
+ 
+    &lt;target name=&quot;dist&quot; depends=&quot;compile&quot; description=&quot;generate the distribution&quot;&gt;
+        &lt;buildnumber /&gt;
+        &lt;!-- Create the distribution directory --&gt;
+        &lt;mkdir dir=&quot;${dist}/lib&quot; /&gt;
+ 
+        &lt;!-- Put everything in ${build} into the MyApplication-${version}.${build.number}.jar --&gt;
+        &lt;jar destfile=&quot;${dist}/lib/MyApplication-${version}.${build.number}.jar&quot; basedir=&quot;${build}&quot; /&gt;
+    &lt;/target&gt;
+ 
+    &lt;target name=&quot;clean&quot; description=&quot;clean up&quot;&gt;
+        &lt;!-- Delete the ${build} and ${dist} directory trees --&gt;
+        &lt;delete dir=&quot;${build}&quot; /&gt;
+        &lt;delete dir=&quot;${dist}&quot; /&gt;
+    &lt;/target&gt;
+&lt;/project&gt;</targets>
+    </hudson.tasks.Ant>
+    <hudson.tasks.BatchFile>
+      <command>ant -f build.xml</command>
+    </hudson.tasks.BatchFile>
+  </builders>
   <publishers/>
-  <buildWrappers/>
+  <buildWrappers>
+    <hudson.tasks.AntWrapper plugin="ant@1.9"/>
+  </buildWrappers>
 </project>
